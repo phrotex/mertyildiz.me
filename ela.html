@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NALAKA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f8fafc;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 2s infinite;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .play-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.5);
+        }
+
+        .play-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 25px -5px rgba(59, 130, 246, 0.6);
+        }
+
+        .play-btn:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.8;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.8;
+            }
+        }
+
+        /* Music visualizer effect */
+        .visualizer {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 2rem;
+            height: 40px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            align-items: flex-end;
+        }
+
+        .visualizer.active {
+            opacity: 1;
+        }
+
+        .bar {
+            width: 8px;
+            background: #38bdf8;
+            border-radius: 4px;
+            height: 10px;
+        }
+
+        .visualizer.active .bar {
+            animation: bounce 1s infinite alternate;
+        }
+
+        .bar:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .bar:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .bar:nth-child(3) {
+            animation-delay: 0.0s;
+        }
+
+        .bar:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .bar:nth-child(5) {
+            animation-delay: 0.2s;
+        }
+
+        @keyframes bounce {
+            0% {
+                height: 10px;
+            }
+
+            100% {
+                height: 40px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>NASILSIN ELA?</h1>
+
+
+        <audio id="myAudio" autoplay loop>
+            <source src="NALAKA.mp3" type="audio/mpeg">
+            Tarayıcınız audio etiketini desteklemiyor.
+        </audio>
+
+        <button class="play-btn" id="playBtn" onclick="togglePlay()">TIKLA</button>
+
+        <div class="visualizer" id="visualizer">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById("myAudio");
+        const visualizer = document.getElementById("visualizer");
+
+        // Sayfa yüklendiğinde otomatik başlatmayı dener
+        window.addEventListener('load', async () => {
+            try {
+                await audio.play();
+                visualizer.classList.add('active');
+            } catch (err) {
+                console.log("Otomatik oynatma tarayıcı tarafından engellendi. Kullanıcı etkileşimi bekleniyor.");
+            }
+        });
+
+        // Sayfada herhangi bir yere ilk tıklamada müziği başlatır (Chrome/Safari engellemesini aşmak için)
+        document.body.addEventListener('click', async (e) => {
+            // Eğer butona tıklandıysa bunu atla, çünkü buton kendi işlevini çalıştıracaktır
+            if (e.target.id === 'playBtn') return;
+
+            if (audio.paused) {
+                try {
+                    await audio.play();
+                    visualizer.classList.add('active');
+                } catch (err) {
+                    console.log("Oynatılamadı:", err);
+                }
+            }
+        }, { once: true });
+
+        // Buton fonksiyonu
+        function togglePlay() {
+            if (audio.paused) {
+                audio.play();
+                visualizer.classList.add('active');
+            } else {
+                audio.pause();
+                visualizer.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+
+</html>
