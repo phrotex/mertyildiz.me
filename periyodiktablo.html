@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Periyodik Tablo</title>
+    <meta name="description" content="Modern, akademik ve interaktif periyodik tablo.">
+    <link rel="stylesheet" href="style1.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Periyodik Tablo</h1>
+            <p>Detayları görmek için elementlerin üzerine gelin. Mobilde elementlere dokunarak bilgi alabilirsiniz.</p>
+        </header>
+
+        <div class="table-scroll-wrapper">
+            <div class="periodic-table" id="periodic-table">
+                <!-- Info Box for Hover Details -->
+                <div class="info-box" id="info-box">
+                    <div class="info-placeholder">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 16v-4"></path>
+                            <path d="M12 8h.01"></path>
+                        </svg>
+                        <p>Ayrıntılı bilgi için bir elementin üzerine gelin veya tıklayın.</p>
+                    </div>
+                </div>
+                <!-- Elements will be generated here -->
+            </div>
+        </div>
+        
+        <!-- Modal for Mobile View -->
+        <div class="modal-overlay" id="mobile-modal">
+            <div class="modal-content">
+                <button class="modal-close" id="modal-close">&times;</button>
+                <div id="modal-body"></div>
+            </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend" id="legend"></div>
+        
+        <footer>
+            <p>Mert Yıldız tarafından hazırlanmıştır.</p>
+        </footer>
+    </div>
+    
+    <!-- Loading overlay -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Veriler Yükleniyor...</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
